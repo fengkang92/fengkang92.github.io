@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="从小程序基础库版本 2.4.0 开始，小程序在手机上支持屏幕旋转。使小程序中的页面支持屏幕旋转的方法是：在 app.json 的 window 段中设置 &amp;quot;pageOrientation&amp;quot;: &amp;quot;auto&amp;quot; ，或在页面 json 文件中配置 &amp;quot;pageOrientation&amp;quot;: &amp;quot;auto&amp;quot; 。">
+<meta name="keywords" content="微信小程序,scss">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何实现微信小程序的横屏及适配">
+<meta property="og:url" content="http://yoursite.com/2019/05/08/如何实现微信小程序的横屏及适配/index.html">
+<meta property="og:site_name" content="人事已非">
+<meta property="og:description" content="从小程序基础库版本 2.4.0 开始，小程序在手机上支持屏幕旋转。使小程序中的页面支持屏幕旋转的方法是：在 app.json 的 window 段中设置 &amp;quot;pageOrientation&amp;quot;: &amp;quot;auto&amp;quot; ，或在页面 json 文件中配置 &amp;quot;pageOrientation&amp;quot;: &amp;quot;auto&amp;quot; 。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6337462-5a713a6ddfca39c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6337462-d51324f6585ee826.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6337462-3b0a658e54704519.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6337462-05992a26768ee8ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-05-08T11:28:14.856Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何实现微信小程序的横屏及适配">
+<meta name="twitter:description" content="从小程序基础库版本 2.4.0 开始，小程序在手机上支持屏幕旋转。使小程序中的页面支持屏幕旋转的方法是：在 app.json 的 window 段中设置 &amp;quot;pageOrientation&amp;quot;: &amp;quot;auto&amp;quot; ，或在页面 json 文件中配置 &amp;quot;pageOrientation&amp;quot;: &amp;quot;auto&amp;quot; 。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/6337462-5a713a6ddfca39c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/08/如何实现微信小程序的横屏及适配/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>如何实现微信小程序的横屏及适配 | 人事已非</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人事已非</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/08/如何实现微信小程序的横屏及适配/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aboo">
+      <meta itemprop="description" content="在所有人事已非的景色里，我最喜欢你">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人事已非">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">如何实现微信小程序的横屏及适配
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-08 19:24:07 / 修改时间：19:28:14" itemprop="dateCreated datePublished" datetime="2019-05-08T19:24:07+08:00">2019-05-08</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/微信小程序/" itemprop="url" rel="index"><span itemprop="name">微信小程序</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/05/08/如何实现微信小程序的横屏及适配/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/08/如何实现微信小程序的横屏及适配/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/05/08/如何实现微信小程序的横屏及适配/" class="leancloud_visitors" data-flag-title="如何实现微信小程序的横屏及适配">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>从小程序基础库版本 <a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" title="基础库 2.4.0 开始支持，低版本需做兼容处理。" target="_blank" rel="noopener">2.4.0</a> 开始，小程序在手机上支持屏幕旋转。使小程序中的页面支持屏幕旋转的方法是：在 <code>app.json</code> 的 <code>window</code> 段中设置 <code>&quot;pageOrientation&quot;: &quot;auto&quot;</code> ，或在页面 json 文件中配置 <code>&quot;pageOrientation&quot;: &quot;auto&quot;</code> 。</p>
+<a id="more"></a>
+<p><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/view/resizable.html" target="_blank" rel="noopener">微信小程序开发文档</a></p>
+<p><strong>PS：1、以这种方式实现小程序屏幕旋转，需要用户关闭手机上的“屏幕锁定”选项</strong></p>
+<p><strong>PS：2、由于开启横屏需要修改json文件的配置，而这个文件我们无法在程序运行中进行修改，故我们无法通过点击按钮或其他操作去使手机屏幕发生旋转，只是是设置为<code>&quot;pageOrientation&quot;: &quot;auto&quot;</code>用户主动旋转手机触发</strong></p>
+<p><strong>PS：3、我们可以在进入某一个页面的时候，固定屏幕横屏展示，设置<code>&quot;pageOrientation&quot;: &quot;landscape &quot;</code></strong></p>
+<h2 id="如何获取当前屏幕状态"><a href="#如何获取当前屏幕状态" class="headerlink" title="如何获取当前屏幕状态"></a>如何获取当前屏幕状态</h2><p>使用 <a href="https://developers.weixin.qq.com/miniprogram/dev/api/SelectorQuery.selectViewport.html" target="_blank" rel="noopener">selectorQuery.selectViewport</a>可以获取到当前的屏幕状态。这种方式比较麻烦，这里介绍一种使用<code>wx.onWindowResize</code>进行监听的方式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">onShow() &#123;</span><br><span class="line">	let that = this;</span><br><span class="line">	wx.onWindowResize(function(res) &#123;</span><br><span class="line">		if (res.deviceOrientation === &apos;landscape&apos;) &#123;</span><br><span class="line">			that.isRotating = true;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			that.isRotating = false;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">         &#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码中，我们可以在<code>wx.onWindowResize</code>函数的回调中获取到当前屏幕的方向，并赋值给<code>isRotating</code>。当然，我们还可以在回调中拿到<code>windowWidth</code>（变化后的窗口宽度，单位 px）和<code>windowHeight</code>（变化后的窗口高度，单位 px）属性。</p>
+<p><code>wx.onWindowResize</code>函数是一个监听函数，类似<code>Vue</code>中的<code>watch</code>，我们可以把它放到<code>onShow</code>中。</p>
+<h2 id="横屏后出现的适配问题"><a href="#横屏后出现的适配问题" class="headerlink" title="横屏后出现的适配问题"></a>横屏后出现的适配问题</h2><p>我们都知道，微信小程序在竖屏状态下，宽度100%，100VW的值为750rpx。但是在横屏之后，750rpx的实际宽度为手机屏幕的高。如图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6337462-5a713a6ddfca39c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="竖屏状态使用rpx,px进行布局"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6337462-d51324f6585ee826.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="横屏状态使用rpx,px进行布局1"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6337462-3b0a658e54704519.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="横屏状态使用rpx,px进行布局2"></p>
+<p>在这种情况下，我们的界面将会变大。<br>举个简单例子，假如手机屏幕的宽高比为1:2，我们有一个按钮大小为100rpx<em>100rpx，那么在竖屏状态下，显示正常，横屏状态下，按钮的显示宽高将会变成原来的2倍，当然他仍然是100rpx</em>100rpx，但是显示出来却是变大了。</p>
+<h2 id="横屏后的适配方案"><a href="#横屏后的适配方案" class="headerlink" title="横屏后的适配方案"></a>横屏后的适配方案</h2><h3 id="使用px进行布局"><a href="#使用px进行布局" class="headerlink" title="使用px进行布局"></a>使用px进行布局</h3><p>我们可以看到，使用<code>px</code>进行布局时，横屏之后元素并没有变大，所以这种方案是可行的。<br>但是，我们可以看到的是，375px在横屏时并没有占满全屏，也就是<code>px</code>和<code>rpx</code>之间并不是简单的1:2的对应关系。<br><img src="https://upload-images.jianshu.io/upload_images/6337462-05992a26768ee8ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="rpx与px的对应关系"><br>这里我们不讨论个物理像素、pt、px之间复杂的关系(<em>/ω＼</em>)<br>所以，使用<code>px</code>布局，也不是那么好用。</p>
+<h3 id="使用vmin进行布局"><a href="#使用vmin进行布局" class="headerlink" title="使用vmin进行布局"></a>使用vmin进行布局</h3><p>先介绍下css3的两个属性<code>vmax</code>和<code>vmin</code></p>
+<blockquote>
+<p>vmax 相对于视口的宽度或高度中较大的那个。其中最大的那个被均分为100单位的vmax<br>vmin  相对于视口的宽度或高度中较小的那个。其中最小的那个被均分为100单位的vmin<br><a href="https://www.html.cn/book/css/values/length/vmin.htm" target="_blank" rel="noopener">文档说明</a></p>
+</blockquote>
+<p>在这里我们只用到了<code>vmin</code>。</p>
+<p>当我们在竖屏时候，<code>100vmin</code>的取值为手机屏幕宽度，当横屏时候，<code>100vmin</code>的取值仍然为手机屏幕宽度，所以以<code>vmin</code>为单位的元素，在手机屏幕发生旋转的时候，其显示大小并不会发生改变（毕竟不管横屏竖屏，<code>100vmin</code>都等于屏幕的宽度）。<br>在使用<code>rpx</code>进行布局时，<code>750rpx</code>的取值为手机屏幕的宽度，而在使用<code>vmin</code>时，<code>100vmin</code>的取值为手机屏幕的宽度，所以，<code>rpx</code>和<code>vmin</code>之间存在一个换算关系，即：<code>x rpx=( x * 100 / 750)vmin</code>。举个例子，<code>75rpx</code>转化为<code>vmin</code>为<code>75 * 100 / 750 = 10 vmin</code>。所以，我们只要将<code>rpx</code>转化成<code>vmin</code>就可以愉快的码页面了~</p>
+<h4 id="使用scss进行转化"><a href="#使用scss进行转化" class="headerlink" title="使用scss进行转化"></a>使用scss进行转化</h4><p>在实际开发中，我们不可能去手动计算每一个<code>vmin</code>的值，由于我用的是<code>scss</code>，所以我用<code>scss</code>进行了一下预处理。这里提供两种方式，一种是<code>css</code>函数，另一种是<code>css mixin</code><br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//css函数</span></span><br><span class="line">@function tovmin(<span class="variable">$rpx</span>)&#123;<span class="comment">//$rpx为需要转换的字号</span></span><br><span class="line">    @return #&#123;$rpx * 100 / 750&#125;vmin; </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用方式</span></span><br><span class="line"><span class="selector-class">.slideAddPanel</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: tovmin(<span class="number">48</span>);</span><br><span class="line">    <span class="attribute">height</span>: tovmin(<span class="number">80</span>);</span><br><span class="line">    <span class="attribute">background</span>: rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>);</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> tovmin(<span class="number">2</span>) tovmin(<span class="number">12</span>) <span class="number">0</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.2</span>);</span><br><span class="line">    <span class="attribute">line-height</span>: tovmin(<span class="number">80</span>);</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">0</span> tovmin(<span class="number">10</span>) tovmin(<span class="number">10</span>) <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//css mixin</span></span><br><span class="line">@<span class="keyword">mixin</span> upx2vmin(<span class="variable">$property</span>, <span class="variable">$values</span>...) &#123;</span><br><span class="line">	</span><br><span class="line">  <span class="variable">$max</span>: length(<span class="variable">$values</span>);<span class="comment">//返回$values列表的长度值</span></span><br><span class="line">  <span class="variable">$pxValues</span>: <span class="string">''</span>;</span><br><span class="line">  <span class="variable">$remValues</span>: <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line">  @<span class="keyword">for</span> <span class="variable">$i</span> from 1 through <span class="variable">$max</span> &#123;</span><br><span class="line">    <span class="variable">$value</span>: nth(<span class="variable">$values</span>, <span class="variable">$i</span>);</span><br><span class="line">    <span class="variable">$remValues</span>: #&#123;<span class="variable">$remValues</span> + (<span class="variable">$value</span> * <span class="number">100</span> / <span class="number">750</span>)&#125;vmin;</span><br><span class="line"></span><br><span class="line">    @<span class="keyword">if</span> <span class="variable">$i</span> &lt; <span class="variable">$max</span> &#123;</span><br><span class="line">      <span class="variable">$remValues</span>: #&#123;<span class="variable">$remValues</span> + <span class="string">" "</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line"></span><br><span class="line">  #&#123;<span class="variable">$property</span>&#125;: <span class="variable">$remValues</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用方式</span></span><br><span class="line"><span class="selector-class">.slideAddPanel</span> &#123;</span><br><span class="line">    @<span class="keyword">include</span> remCalc(width,<span class="number">45</span>);</span><br><span class="line">    @<span class="keyword">include</span> remCalc(margin,<span class="number">1</span>,.<span class="number">5</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>PS：这两种方法均来自网络，我还是比较喜欢第一种~</strong></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微信小程序/" rel="tag"># 微信小程序</a>
+          
+            <a href="/tags/scss/" rel="tag"># scss</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/29/图片垂直居中/" rel="next" title="图片垂直居中">
+                <i class="fa fa-chevron-left"></i> 图片垂直居中
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Aboo">
+            
+              <p class="site-author-name" itemprop="name">Aboo</p>
+              <div class="site-description motion-element" itemprop="description">在所有人事已非的景色里，我最喜欢你</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/fengkang92" title="GitHub &rarr; https://github.com/fengkang92" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何获取当前屏幕状态"><span class="nav-number">1.</span> <span class="nav-text">如何获取当前屏幕状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#横屏后出现的适配问题"><span class="nav-number">2.</span> <span class="nav-text">横屏后出现的适配问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#横屏后的适配方案"><span class="nav-number">3.</span> <span class="nav-text">横屏后的适配方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用px进行布局"><span class="nav-number">3.1.</span> <span class="nav-text">使用px进行布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用vmin进行布局"><span class="nav-number">3.2.</span> <span class="nav-text">使用vmin进行布局</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用scss进行转化"><span class="nav-number">3.2.1.</span> <span class="nav-text">使用scss进行转化</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aboo</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'BEW4geeLgOU0anAOYU8ocrci-gzGzoHsz',
+    appKey: '0BPUNOYroG5yQh4UUW36q2QO',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+              })
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! More info at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log('LeanCloud Counter Error: ' + responseJSON.code + ' ' + responseJSON.error);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + 'BEW4geeLgOU0anAOYU8ocrci')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': 'BEW4geeLgOU0anAOYU8ocrci',
+                'X-LC-Key': '0BPUNOYroG5yQh4UUW36q2QO',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
