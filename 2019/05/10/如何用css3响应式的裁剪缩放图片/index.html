@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.0.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.0.1">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="其实这篇文章的标题也可以叫做《如何用css3实现微信小程序image的mode属性》，因为我们今天讨论的响应式裁剪缩放图片，主要是实现了微信小程序image标签的mode属性。">
+<meta name="keywords" content="响应式,css3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何用css3响应式的裁剪缩放图片">
+<meta property="og:url" content="http://yoursite.com/2019/05/10/如何用css3响应式的裁剪缩放图片/index.html">
+<meta property="og:site_name" content="人事已非">
+<meta property="og:description" content="其实这篇文章的标题也可以叫做《如何用css3实现微信小程序image的mode属性》，因为我们今天讨论的响应式裁剪缩放图片，主要是实现了微信小程序image标签的mode属性。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6337462-4319133be748e790.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6337462-e510d3d56cb14b75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6337462-7846713894a29efc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6337462-629587c3afc877bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6337462-7eddd68999a63e6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6337462-edd6256330a17491.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-05-10T07:58:41.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何用css3响应式的裁剪缩放图片">
+<meta name="twitter:description" content="其实这篇文章的标题也可以叫做《如何用css3实现微信小程序image的mode属性》，因为我们今天讨论的响应式裁剪缩放图片，主要是实现了微信小程序image标签的mode属性。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/6337462-4319133be748e790.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/10/如何用css3响应式的裁剪缩放图片/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>如何用css3响应式的裁剪缩放图片 | 人事已非</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人事已非</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/10/如何用css3响应式的裁剪缩放图片/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Aboo">
+      <meta itemprop="description" content="在所有人事已非的景色里，我最喜欢你">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人事已非">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">如何用css3响应式的裁剪缩放图片
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-10 15:56:57 / 修改时间：15:58:41" itemprop="dateCreated datePublished" datetime="2019-05-10T15:56:57+08:00">2019-05-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/css小技巧/" itemprop="url" rel="index"><span itemprop="name">css小技巧</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/05/10/如何用css3响应式的裁剪缩放图片/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/10/如何用css3响应式的裁剪缩放图片/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/05/10/如何用css3响应式的裁剪缩放图片/" class="leancloud_visitors" data-flag-title="如何用css3响应式的裁剪缩放图片">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>其实这篇文章的标题也可以叫做《如何用css3实现微信小程序image的mode属性》，因为我们今天讨论的响应式裁剪缩放图片，主要是实现了微信小程序image标签的mode属性。</p>
+<a id="more"></a>
+<h2 id="微信小程序image组件的mode属性"><a href="#微信小程序image组件的mode属性" class="headerlink" title="微信小程序image组件的mode属性"></a>微信小程序image组件的mode属性</h2><p>开发过微信小程序的同学都知道，当后台返回来的图片大小不一样，或者用户上传的图片大小不一样，而我们需要统一进行展示的时候，可以利用image标签的mode属性对图片进行缩放裁剪。mode属性的具体属性及表现形式如图:</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6337462-4319133be748e790.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="mode的取值"></p>
+<p><a href="https://developers.weixin.qq.com/miniprogram/dev/component/image.html" target="_blank" rel="noopener">小程序开发文档</a></p>
+<h2 id="如何使用css实现mode效果"><a href="#如何使用css实现mode效果" class="headerlink" title="如何使用css实现mode效果"></a>如何使用css实现mode效果</h2><p>在移动端和PC端开发中，我们可以采用两种方案去实现mode的各种效果，由于使用了css3的一些属性，移动端浏览器适配性比较好，不需要额外做适配，PC端可以根据具体情况做一些兼容处理。</p>
+<ul>
+<li>使用背景图片的<code>background-position</code>属性和<code>background-size</code>属性</li>
+<li>使用css3的<code>object-fit</code>属性和<code>object-position</code>属性</li>
+</ul>
+<p><strong>object-fit属性</strong></p>
+<blockquote>
+<p>这个属性决定了像[img]和[videos]这样的替换元素的内容应该如何使用他的宽度和高度来填充其容器。<br>可以通过使用 [<code>object-position</code>] 属性来切换被替换元素的内容对象在元素框内的对齐方式。</p>
+</blockquote>
+<p>取值：<br><code>contain</code><br>被替换的内容将被缩放，以在填充元素的内容框时保持其宽高比。 整个对象在填充盒子的同时保留其长宽比，因此如果宽高比与框的宽高比不匹配，该对象将被添加“[黑边]</p>
+<p><code>cover</code><br>被替换的内容在保持其宽高比的同时填充元素的整个内容框。如果对象的宽高比与内容框不相匹配，该对象将被剪裁以适应内容框。</p>
+<p><code>fill</code><br>被替换的内容正好填充元素的内容框。整个对象将完全填充此框。如果对象的宽高比与内容框不相匹配，那么该对象将被拉伸以适应内容框。</p>
+<p><code>none</code><br>被替换的内容将保持其原有的尺寸。</p>
+<p><code>scale-down</code><br>内容的尺寸与 <code>none</code> 或 <code>contain</code> 中的一个相同，取决于它们两个之间谁得到的对象尺寸会更小一些。</p>
+<p><strong>object-position属性</strong></p>
+<p>[CSS]属性 <strong><code>object-position</code></strong> 规定了[可替换元素]的内容，在这里我们称其为对象（即 <strong><code>object-position</code></strong> 中的 <strong><code>object</code>）</strong>，在其内容框中的位置。可替换元素的内容框中未被对象所覆盖的部分，则会显示该元素的背景。</p>
+<p>在接下来的方案中，有些方案可以使用两种方式实现，有的我暂时只用了一种方案，大家可以自取所需。两种方案html代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 背景图片 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrapper"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"inner"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- object-fit --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"2.jpg"</span> <span class="attr">class</span>=<span class="string">"objectImg"</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrapper</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">border</span>: solid <span class="number">2px</span> red;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们展示的原图如下：<br><img src="https://upload-images.jianshu.io/upload_images/6337462-e510d3d56cb14b75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原图，来自网络，侵删"></p>
+<h4 id="实现在固定区域内，图片保持其宽高比，使图片短边能完全显示出来"><a href="#实现在固定区域内，图片保持其宽高比，使图片短边能完全显示出来" class="headerlink" title="实现在固定区域内，图片保持其宽高比，使图片短边能完全显示出来"></a>实现在固定区域内，图片保持其宽高比，使图片短边能完全显示出来</h4><p><img src="https://upload-images.jianshu.io/upload_images/6337462-7846713894a29efc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片保持其宽高比，使图片短边能完全显示出来"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">.inner&#123;</span><br><span class="line">    width: 100%;</span><br><span class="line">    height: 0;</span><br><span class="line">    padding-bottom: 100%;</span><br><span class="line">    background: green;</span><br><span class="line">    background-size: cover;</span><br><span class="line">    background-image: url(&apos;4.jpg&apos;);</span><br><span class="line">    overflow: hidden;</span><br><span class="line">    background-position: center center;</span><br><span class="line">    background-repeat: no-repeat;</span><br><span class="line">    -webkit-background-size:cover;</span><br><span class="line">    -moz-background-size:cover;</span><br><span class="line">    background-size:cover;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.objectImg&#123;</span><br><span class="line">  width: 200px;</span><br><span class="line">  height: 200px;</span><br><span class="line">  object-fit: cover;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="实现在固定区域内，图片保持其宽高比，使图片长边能完全显示出来"><a href="#实现在固定区域内，图片保持其宽高比，使图片长边能完全显示出来" class="headerlink" title="实现在固定区域内，图片保持其宽高比，使图片长边能完全显示出来"></a>实现在固定区域内，图片保持其宽高比，使图片长边能完全显示出来</h4><p><img src="https://upload-images.jianshu.io/upload_images/6337462-629587c3afc877bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片保持其宽高比，使图片长边能完全显示出来"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">.inner&#123;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 0;</span><br><span class="line">  padding-bottom: 100%;</span><br><span class="line">  background: green;</span><br><span class="line">  background-size: contain;</span><br><span class="line">  background-image: url(&apos;4.jpg&apos;);</span><br><span class="line">  overflow: hidden;</span><br><span class="line">  background-position: center center;</span><br><span class="line">  background-repeat: no-repeat;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.objectImg&#123;</span><br><span class="line">  width: 200px;</span><br><span class="line">  height: 200px;</span><br><span class="line">  object-fit: contain;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>这种方案，图片两侧可能会出现背景色</strong></p>
+<h4 id="不保持纵横比缩放图片，使图片完全适应"><a href="#不保持纵横比缩放图片，使图片完全适应" class="headerlink" title="不保持纵横比缩放图片，使图片完全适应"></a>不保持纵横比缩放图片，使图片完全适应</h4><p><img src="https://upload-images.jianshu.io/upload_images/6337462-7eddd68999a63e6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不保持纵横比缩放图片，使图片完全适应"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.objectImg&#123;</span><br><span class="line">  width: 200px;</span><br><span class="line">  height: 200px;</span><br><span class="line">  object-fit: fill;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>别的方式直接用图片宽高100%就可以，这种会使图片变形</strong></p>
+<h4 id="不缩放图片，只显示图片的顶部、底部、左侧、右侧、左上、右上、左下、右下区域"><a href="#不缩放图片，只显示图片的顶部、底部、左侧、右侧、左上、右上、左下、右下区域" class="headerlink" title="不缩放图片，只显示图片的顶部、底部、左侧、右侧、左上、右上、左下、右下区域"></a>不缩放图片，只显示图片的顶部、底部、左侧、右侧、左上、右上、左下、右下区域</h4><p><img src="https://upload-images.jianshu.io/upload_images/6337462-edd6256330a17491.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不缩放图片，只显示图片的顶部、底部、左侧、右侧、左上、右上、左下、右下区域"></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.objectImg</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">object-fit</span>: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">  &lt;img src=&quot;4.jpg&quot; class=&quot;objectImg&quot; style=&quot;object-position: 50% 0;&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;text&quot;&gt;object-fit 顶部&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">  &lt;img src=&quot;4.jpg&quot; class=&quot;objectImg&quot; style=&quot;object-position: 50% 100%;&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;text&quot;&gt;object-fit 底部&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">  &lt;img src=&quot;4.jpg&quot; class=&quot;objectImg&quot; style=&quot;object-position: 0% 50%;&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;text&quot;&gt;object-fit 左侧&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">  &lt;img src=&quot;4.jpg&quot; class=&quot;objectImg&quot; style=&quot;object-position: 100% 50%;&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;text&quot;&gt;object-fit 右侧&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">  &lt;img src=&quot;4.jpg&quot; class=&quot;objectImg&quot; style=&quot;object-position: 0 0;&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;text&quot;&gt;object-fit 左上&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">  &lt;img src=&quot;4.jpg&quot; class=&quot;objectImg&quot; style=&quot;object-position: 0 100%;&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;text&quot;&gt;object-fit 左下&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>原理上就是我们设置<code>object-fit: none</code>属性后，图片将不会进行缩放，我们可以通过<code>object-position</code>属性自由调整图片的位置。<code>object-position</code>属性的用法和<code>background-position</code>属性简直一模一样。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/响应式/" rel="tag"># 响应式</a>
+          
+            <a href="/tags/css3/" rel="tag"># css3</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/08/如何实现微信小程序的横屏及适配/" rel="next" title="如何实现微信小程序的横屏及适配">
+                <i class="fa fa-chevron-left"></i> 如何实现微信小程序的横屏及适配
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Aboo">
+            
+              <p class="site-author-name" itemprop="name">Aboo</p>
+              <div class="site-description motion-element" itemprop="description">在所有人事已非的景色里，我最喜欢你</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/fengkang92" title="GitHub &rarr; https://github.com/fengkang92" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#微信小程序image组件的mode属性"><span class="nav-number">1.</span> <span class="nav-text">微信小程序image组件的mode属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用css实现mode效果"><span class="nav-number">2.</span> <span class="nav-text">如何使用css实现mode效果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现在固定区域内，图片保持其宽高比，使图片短边能完全显示出来"><span class="nav-number">2.0.1.</span> <span class="nav-text">实现在固定区域内，图片保持其宽高比，使图片短边能完全显示出来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现在固定区域内，图片保持其宽高比，使图片长边能完全显示出来"><span class="nav-number">2.0.2.</span> <span class="nav-text">实现在固定区域内，图片保持其宽高比，使图片长边能完全显示出来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不保持纵横比缩放图片，使图片完全适应"><span class="nav-number">2.0.3.</span> <span class="nav-text">不保持纵横比缩放图片，使图片完全适应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不缩放图片，只显示图片的顶部、底部、左侧、右侧、左上、右上、左下、右下区域"><span class="nav-number">2.0.4.</span> <span class="nav-text">不缩放图片，只显示图片的顶部、底部、左侧、右侧、左上、右上、左下、右下区域</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Aboo</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.1"></script>
+
+  <script src="/js/src/motion.js?v=7.0.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.1"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.1"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.1"></script>
+<script src="/js/src/post-details.js?v=7.0.1"></script>
+
+
+
+  
+
+
+  <script src="/js/src/next-boot.js?v=7.0.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'BEW4geeLgOU0anAOYU8ocrci-gzGzoHsz',
+    appKey: '0BPUNOYroG5yQh4UUW36q2QO',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+              })
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! More info at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log('LeanCloud Counter Error: ' + responseJSON.code + ' ' + responseJSON.error);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + 'BEW4geeLgOU0anAOYU8ocrci')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': 'BEW4geeLgOU0anAOYU8ocrci',
+                'X-LC-Key': '0BPUNOYroG5yQh4UUW36q2QO',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
