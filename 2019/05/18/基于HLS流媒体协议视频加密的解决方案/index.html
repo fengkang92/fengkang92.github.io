@@ -94,18 +94,18 @@
 
 
 
-  <meta name="description" content="转载自 掘金作者 hauk0101链接：https://juejin.im/post/5cdf71fcf265da1b8466b3ce  背景付费观看视频的模式是很多平台的核心业务，如果视频被录制并非法传播，付费业务将受到严重威胁。因此对视频服务进行加密的技术变得尤为重要。 本文所指的视频加密是为了让要保护的视频不能轻易被下载，即使下载到了也是加密后的内容，其它人解开加密后的内容需要付出非常大的">
+  <meta name="description" content="背景付费观看视频的模式是很多平台的核心业务，如果视频被录制并非法传播，付费业务将受到严重威胁。因此对视频服务进行加密的技术变得尤为重要。">
 <meta name="keywords" content="阿布，个人博客，人事已非">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于HLS流媒体协议视频加密的解决方案">
 <meta property="og:url" content="http://yoursite.com/2019/05/18/基于HLS流媒体协议视频加密的解决方案/index.html">
 <meta property="og:site_name" content="人事已非">
-<meta property="og:description" content="转载自 掘金作者 hauk0101链接：https://juejin.im/post/5cdf71fcf265da1b8466b3ce  背景付费观看视频的模式是很多平台的核心业务，如果视频被录制并非法传播，付费业务将受到严重威胁。因此对视频服务进行加密的技术变得尤为重要。 本文所指的视频加密是为了让要保护的视频不能轻易被下载，即使下载到了也是加密后的内容，其它人解开加密后的内容需要付出非常大的">
+<meta property="og:description" content="背景付费观看视频的模式是很多平台的核心业务，如果视频被录制并非法传播，付费业务将受到严重威胁。因此对视频服务进行加密的技术变得尤为重要。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-18T06:40:08.957Z">
+<meta property="og:updated_time" content="2019-06-06T07:00:50.222Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于HLS流媒体协议视频加密的解决方案">
-<meta name="twitter:description" content="转载自 掘金作者 hauk0101链接：https://juejin.im/post/5cdf71fcf265da1b8466b3ce  背景付费观看视频的模式是很多平台的核心业务，如果视频被录制并非法传播，付费业务将受到严重威胁。因此对视频服务进行加密的技术变得尤为重要。 本文所指的视频加密是为了让要保护的视频不能轻易被下载，即使下载到了也是加密后的内容，其它人解开加密后的内容需要付出非常大的">
+<meta name="twitter:description" content="背景付费观看视频的模式是很多平台的核心业务，如果视频被录制并非法传播，付费业务将受到严重威胁。因此对视频服务进行加密的技术变得尤为重要。">
 
 
 
@@ -381,12 +381,24 @@
                 
               
 
-              <time title="创建时间：2019-05-18 14:20:49 / 修改时间：14:40:08" itemprop="dateCreated datePublished" datetime="2019-05-18T14:20:49+08:00">2019-05-18</time>
+              <time title="创建时间：2019-05-18 14:20:49" itemprop="dateCreated datePublished" datetime="2019-05-18T14:20:49+08:00">2019-05-18</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-06 15:00:50" itemprop="dateModified" datetime="2019-06-06T15:00:50+08:00">2019-06-06</time>
               
             
           </span>
@@ -444,10 +456,7 @@
       
 
       
-        <blockquote>
-<p>转载自 掘金<br>作者 hauk0101<br>链接：<a href="https://juejin.im/post/5cdf71fcf265da1b8466b3ce" target="_blank" rel="noopener">https://juejin.im/post/5cdf71fcf265da1b8466b3ce</a></p>
-</blockquote>
-<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>付费观看视频的模式是很多平台的核心业务，如果视频被录制并非法传播，付费业务将受到严重威胁。因此对视频服务进行加密的技术变得尤为重要。</p>
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>付费观看视频的模式是很多平台的核心业务，如果视频被录制并非法传播，付费业务将受到严重威胁。因此对视频服务进行加密的技术变得尤为重要。<br><a id="more"></a></p>
 <p>本文所指的视频加密是为了让要保护的视频不能轻易被下载，即使下载到了也是加密后的内容，其它人解开加密后的内容需要付出非常大的代价。</p>
 <p>无法做到严格的让要保护的视频不被录制，原因在于你需要在客户端播放出视频的原内容，解密的流程在客户端的话不法分子就能模拟整个流程，最保守也能用屏幕录制软件录制到视频的原内容(可以通过加水印的方法缓解下)。我们的目标是让他获取原内容的代价更大。</p>
 <p>本文为大家提供了一套简单的基于HLS流媒体协议，使用video.js + NodeJS + FFmpeg等相关技术实现的m3u8+ts+aes128视频加密及播放的解决方案示例。</p>
@@ -488,7 +497,7 @@
 <p>第一，把mp4的视频源通过FFmpeg转换为加密后的m3u8文件和ts文件以及关键的加密密钥key文件；<br>第二，通过最简单的权限访问，保护加密密钥key文件；<br>第三，利用video.js及相关的videojs-contrib-hls.js实现客户端的视频文件解密，并播放。</p>
 <p>  因此可以看出关于视频加密的解决方案中，最重要的其实是如何保护加密密钥key文件，而这部分工作更多的是在于服务器端的相关策略，比如可以使用cookie、session相关技术、添加自定义token校验、有效时长机制等等方法保证秘钥key文件的相对安全性、可靠性。<br> <br>  而如何将视频源文件转化为对应的加密后的文件，可以更多的研究开源库FFmpeg的使用，甚至如果没有迫切需求，可以考虑使用第三方视频云服务商的相关解决方案。至于客户端的视频解密，也可以研究video.js相关的内容。<br>完整项目<br>github.com/hauk0101/vi…<br>参考资料</p>
 <p>流媒体加密 : github.com/gwuhaolin/b…<br>Video.js: The Player Framework: videojs.com<br>FFmpeg: <a href="http://www.ffmpeg.org" target="_blank" rel="noopener">www.ffmpeg.org</a></p>
-<p>作者：hauk0101<br>链接：<a href="https://juejin.im/post/5cdf71fcf265da1b8466b3ce" target="_blank" rel="noopener">https://juejin.im/post/5cdf71fcf265da1b8466b3ce</a><br>来源：掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>作者：hauk0101<br>链接：<a href="https://juejin.im/post/5cdf71fcf265da1b8466b3ce" target="_blank" rel="noopener">https://juejin.im/post/5cdf71fcf265da1b8466b3ce</a><br>来源：掘金</p>
 
       
     </div>
@@ -633,9 +642,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -672,9 +679,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
